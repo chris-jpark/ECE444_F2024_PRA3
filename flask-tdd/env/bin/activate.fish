@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/cpark/Library/CloudStorage/OneDrive-UniversityofToronto/ECE444/pra3/flask-tdd/env"
+set -gx VIRTUAL_ENV "/Users/cpark/Documents/ECE444_F2024_PRA3/flask-tdd/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
