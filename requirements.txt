@@ -14,8 +14,8 @@ pytest==8.3.3
 tomli==2.0.2
 werkzeug==3.0.4
 zipp==3.20.2
+psycogpg2==2.9.9
 Flask
 Flask-SQLAlchemy
 gunicorn
 pytest
-psycogpg2
