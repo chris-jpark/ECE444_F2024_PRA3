@@ -18,3 +18,4 @@ Flask
 Flask-SQLAlchemy
 gunicorn
 pytest
+psycogpg2
