@@ -63,7 +63,6 @@ def test_login_logout(client):
     rv = login(client, app.config["USERNAME"], app.config["PASSWORD"] + "x")
     assert b"Invalid password" in rv.data
 
-
 def test_messages(client):
     """Ensure that user can post messages"""
     login(client, app.config["USERNAME"], app.config["PASSWORD"])
@@ -76,11 +75,11 @@ def test_messages(client):
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
 
-def test_delete_message(client):
-    """Ensure the messages are being deleted"""
-    rv = client.get('/delete/1')
-    data = json.loads(rv.data)
-    assert data["status"] == 1
+# def test_delete_message(client):
+#     """Ensure the messages are being deleted"""
+#     rv = client.get('/delete/1')
+#     data = json.loads(rv.data)
+#     assert data["status"] == 1
 
 def test_delete_message(client):
     """Ensure the messages are being deleted"""
@@ -91,4 +90,28 @@ def test_delete_message(client):
     rv = client.get("/delete/1")
     data = json.loads(rv.data)
     assert data["status"] == 1
-    
+
+def test_search(client):
+    """Ensure that user can post messages"""
+    login(client, app.config["USERNAME"], app.config["PASSWORD"])
+    rv = client.post(
+        "/add",
+        data=dict(title="water", text="bottle"),
+        follow_redirects=True,
+    )
+    data = client.get("/search/?query=water")
+    assert b"bottle" in data.data
+    print(data)
+    assert data.status_code == 200
+
+def test_login_req(client):
+    """Ensure that login is required"""
+    rv = client.post(
+        "/add",
+        data=dict(title="<Hello>", text="<strong>HTML</strong> allowed here"),
+        follow_redirects=True,
+    )
+    assert rv.status_code == 401    
+    rv = client.get("/delete/1")
+    data = json.loads(rv.data)
+    assert data["status"] == 0
